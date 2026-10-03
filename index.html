@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Forge Fitness Unisex Gym — Train Hard. Get Strong. Stay Fit.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* ===== 1. THEME TOKENS — change colours / fonts here ===== */
+:root{
+  --bg1:#F3E3A3; --bg2:#EBD27A;          /* warm beige-yellow */
+  --ink:#1B1B1B;                          /* charcoal */
+  --accent:#E8452C;                       /* orange-red */
+  --skin:#D98A55; --card:#FBF1C8; --cream:#FFF6D6;
+  --disp:'Anton','Bebas Neue',Impact,'Arial Narrow',sans-serif;
+  --body:'Inter','Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --nav:64px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(var(--nav) + env(safe-area-inset-top,0px));scrollbar-color:var(--accent) var(--bg2)}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+/* custom orange scrollbar */
+::-webkit-scrollbar{width:12px}::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--accent);border:3px solid var(--bg2);border-radius:8px}
+body{margin:0;font-family:var(--body);color:var(--ink);line-height:1.55;overflow-x:hidden;
+  background:radial-gradient(circle at 18% 8%,var(--bg1) 0,transparent 60%),radial-gradient(circle at 85% 85%,var(--bg2) 0,transparent 55%),var(--bg1);background-attachment:fixed}
+/* paper grain overlay (inline SVG noise) */
+body::before{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.4;mix-blend-mode:multiply;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .3 0 0 0 0 .1 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+h1,h2,h3{font-family:var(--disp);font-weight:400;text-transform:uppercase;line-height:.95;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+/* ===== 2. NAV ===== */
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;height:var(--nav);display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:0 clamp(14px,4vw,48px);background:color-mix(in srgb,var(--bg1) 88%,transparent);backdrop-filter:blur(8px);border-bottom:3px solid var(--ink)}
+.logo{display:flex;align-items:center;gap:8px;font:1.7rem/1 var(--disp);letter-spacing:.04em;text-decoration:none}
+.logo b{color:var(--accent);font-weight:400}
+nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0}
+nav ul a{text-decoration:none;font-weight:600;position:relative}
+nav ul a::after{content:"";position:absolute;left:0;bottom:-4px;height:3px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+nav ul a:hover::after{transform:scaleX(1)}
+.nr{display:flex;align-items:center;gap:10px}
+#burger{display:none;width:44px;height:44px;border:3px solid var(--ink);background:var(--cream);border-radius:10px;cursor:pointer;padding:0;position:relative}
+#burger i{position:absolute;left:9px;right:9px;height:3px;background:var(--ink);transition:.25s}
+#burger i:nth-child(1){top:12px}#burger i:nth-child(2){top:19px}#burger i:nth-child(3){top:26px}
+nav.open #burger i:nth-child(1){top:19px;transform:rotate(45deg)}nav.open #burger i:nth-child(2){opacity:0}nav.open #burger i:nth-child(3){top:19px;transform:rotate(-45deg)}
+
+/* ===== 3. BUTTONS ===== */
+.btn{display:inline-block;font:1.15rem/1 var(--disp);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;cursor:pointer;
+  padding:15px 28px;border:3px solid var(--ink);border-radius:10px;box-shadow:4px 4px 0 var(--ink);transition:transform .15s,box-shadow .15s,background .2s,color .2s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.solid{background:var(--accent);color:var(--cream)}
+.line{background:transparent;color:var(--ink)}.line:hover{background:var(--ink);color:var(--bg1)}
+.sm{padding:10px 18px;font-size:1rem}
+
+/* ===== 4. LAYOUT ===== */
+.sec{position:relative;z-index:10;padding:calc(34svh + 28px) 20px 56px}
+.inner{max-width:640px}
+.hero{display:flex;align-items:center;min-height:calc(100svh - var(--nav));padding-bottom:110px}
+h1{font-size:clamp(3.2rem,13vw,8.4rem);letter-spacing:.01em}
+h1 span{color:var(--accent);-webkit-text-stroke:0}
+h2{font-size:clamp(2.4rem,7vw,4.4rem);margin-bottom:22px}
+.tag{font-size:clamp(1.05rem,2.6vw,1.4rem);font-weight:800;margin:18px 0 26px}
+.btns{display:flex;gap:14px;flex-wrap:wrap}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(170px,1fr));align-items:stretch}
+.card{background:var(--card);border:3px solid var(--ink);border-radius:14px;box-shadow:6px 6px 0 var(--ink);padding:20px;transition:transform .2s,box-shadow .2s}
+.card:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 var(--ink)}
+.card h3{font-size:1.9rem;margin-bottom:8px}
+.card p{margin:0;font-size:.95rem}
+.why{display:grid;gap:14px}
+.why .card{display:flex;gap:16px;align-items:flex-start}
+.ic{flex:none;width:52px;height:52px;border:3px solid var(--ink);border-radius:12px;background:var(--accent);display:grid;place-items:center}
+.ic svg{width:30px;height:30px;stroke:var(--cream);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.price{display:flex;flex-direction:column;gap:10px;position:relative}
+.price .amt{font:3rem/1 var(--disp)}.price .amt small{font:600 .9rem var(--body)}
+.price ul{margin:0;padding:0 0 0 18px;font-size:.92rem;flex:1}
+.price.hot{background:var(--accent);color:var(--cream);transform:scale(1.05);z-index:2}
+.price.hot:hover{transform:scale(1.05) translate(-3px,-3px)}
+.price.hot .btn{background:var(--cream);color:var(--ink)}
+.badge{position:absolute;top:-16px;right:12px;background:var(--ink);color:var(--bg1);font:.95rem var(--disp);letter-spacing:.08em;padding:5px 12px;border-radius:8px}
+.free{text-align:center;padding:90px 20px}
+.free .inner{margin:0 auto;max-width:560px}
+form{display:grid;gap:12px;text-align:left}
+form input,form select{font:inherit;padding:14px;border:3px solid var(--ink);border-radius:10px;background:var(--cream)}
+#ok{display:none;font-weight:800;color:var(--accent);text-align:center}
+footer{position:relative;z-index:10;background:var(--ink);color:var(--cream);padding:48px clamp(18px,5vw,64px);display:grid;gap:28px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+footer h3{color:var(--accent);font-size:1.6rem;margin-bottom:10px}footer p{margin:0}
+.soc{display:flex;gap:12px}.soc a{width:44px;height:44px;border:3px solid var(--cream);border-radius:50%;display:grid;place-items:center;transition:.2s}
+.soc a:hover{background:var(--accent);border-color:var(--accent)}
+.soc svg{width:20px;height:20px;fill:none;stroke:var(--cream);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+/* ===== 5. FALLING DUMBBELLS ===== */
+#floor{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-around;align-items:flex-end;padding:0 2vw;z-index:15;pointer-events:none}
+.d{position:relative}
+.d svg{display:block;width:100%;height:auto;margin-bottom:5px}
+.d .sh{position:absolute;left:8%;right:8%;bottom:0;height:9px;border-radius:50%;background:rgba(27,27,27,.3);filter:blur(2px)}
+
+/* ===== 6. ATHLETE STAGE (fixed) ===== */
+#stage{position:fixed;z-index:20;left:0;right:0;top:var(--nav);height:34svh;pointer-events:none;transition:opacity .5s;
+  background:linear-gradient(var(--bg1) 85%,transparent)}
+#stage.off{opacity:0}
+#man{width:100%;height:100%;display:block}
+#man rect,#man path,#man circle{stroke:var(--ink);stroke-width:5;stroke-linejoin:round}
+#man .n{stroke:none}
+.sk{fill:var(--skin)}.tank{fill:var(--accent)}.ink{fill:var(--ink)}
+#hud{position:absolute;left:12px;top:8px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+#lab{background:var(--ink);color:var(--bg1);font:700 .85rem var(--body);padding:5px 10px;border-radius:8px}
+#cnt{font:2rem/1 var(--disp);color:var(--accent)}#cnt small{font:600 .75rem var(--body);color:var(--ink)}
+#bar{position:fixed;right:0;top:0;bottom:0;width:6px;z-index:55;background:rgba(27,27,27,.15)}
+#bar i{display:block;height:100%;background:var(--accent);transform:scaleY(0);transform-origin:top}
+
+/* ===== 7. RESPONSIVE ===== */
+@media(max-width:899px){
+  nav ul{position:absolute;top:var(--nav);left:0;right:0;flex-direction:column;gap:0;background:var(--bg1);border-bottom:3px solid var(--ink);transform:translateY(-130%);transition:transform .3s;z-index:-1}
+  nav.open ul{transform:none}
+  nav ul a{display:block;padding:16px 22px;font-size:1.1rem}
+  #burger{display:block}
+}
+@media(min-width:900px){
+  #stage{left:auto;right:3vw;top:calc(var(--nav) + 3vh);width:min(40vw,460px);height:calc(100svh - var(--nav) - 6vh);background:none}
+  #hud{left:auto;right:0;top:0;align-items:flex-end}
+  #lab{font-size:1rem}#cnt{font-size:3rem}
+  .sec{min-height:160vh;padding:0 0 0 clamp(18px,6vw,90px)}
+  .sec .inner{position:sticky;top:calc(var(--nav) + 8vh);padding:4vh 0 6vh;max-width:min(54vw,680px)}
+  .hero{min-height:calc(100svh - var(--nav));padding-bottom:0}
+  .hero .inner{position:static;padding:0}
+  .free{padding:120px 20px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div id="bar"><i></i></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="logo" href="#home" aria-label="Forge Fitness home">
+    <svg width="34" height="24" viewBox="0 0 34 24"><g stroke="#1B1B1B" stroke-width="2.5" stroke-linejoin="round"><rect x="1.5" y="3" width="6" height="18" rx="2" fill="#E8452C"/><rect x="26.5" y="3" width="6" height="18" rx="2" fill="#E8452C"/><rect x="7.5" y="7" width="3.5" height="10" fill="#1B1B1B"/><rect x="23" y="7" width="3.5" height="10" fill="#1B1B1B"/><rect x="11" y="10" width="12" height="4" fill="#1B1B1B"/></g></svg>
+    FORGE <b>FITNESS</b>
+  </a>
+  <ul id="links">
+    <li><a href="#home">Home</a></li><li><a href="#programs">Programs</a></li>
+    <li><a href="#trainers">Trainers</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nr">
+    <a class="btn solid sm" href="#contact">Join Now</a>
+    <button id="burger" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button>
+  </div>
+</nav>
+
+<!-- FIXED ATHLETE (side-view, built from separate body-part groups) -->
+<div id="stage" aria-hidden="true">
+  <div id="hud"><div id="lab">Biceps Curl – 3x12</div><div id="cnt">00<small> / 12 reps</small></div></div>
+  <svg id="man" viewBox="0 20 400 450" preserveAspectRatio="xMidYMax meet">
+    <ellipse class="n ink" cx="200" cy="456" rx="95" ry="6" opacity=".25"/>
+    <path d="M30 455H370" stroke="#1B1B1B" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <g id="root">
+      <g id="thigh"><rect class="sk" x="172" y="240" width="36" height="116" rx="18"/>
+        <g id="shin"><rect class="sk" x="177" y="340" width="26" height="104" rx="13"/>
+          <path class="tank" d="M170 436h46q20 2 20 16H168z"/></g></g>
+      <g id="torso">
+        <rect class="sk" x="181" y="112" width="18" height="30"/>
+        <rect class="tank" x="164" y="132" width="52" height="130" rx="24"/>
+        <rect class="ink" x="162" y="236" width="56" height="38" rx="14"/>
+        <circle class="sk" cx="192" cy="92" r="26"/>
+        <path class="ink" d="M166 92A26 26 0 0 1 218 92Q192 78 166 92Z"/>
+        <path d="M168 84Q192 74 217 84" fill="none" stroke="#E8452C" stroke-width="7"/>
+        <circle class="n ink" cx="205" cy="96" r="3.5"/>
+        <g id="uarm"><rect class="sk" x="179" y="134" width="22" height="78" rx="11"/>
+          <g id="farm"><rect class="sk" x="180" y="198" width="20" height="70" rx="10"/>
+            <g id="bell"><rect class="ink" x="170" y="262" width="40" height="9" rx="4"/>
+              <rect class="tank" x="162" y="248" width="13" height="36" rx="4"/><rect class="tank" x="205" y="248" width="13" height="36" rx="4"/>
+              <circle class="sk" cx="190" cy="266" r="11"/></g>
+          </g></g>
+      </g>
+    </g>
+  </svg>
+</div>
+
+<!-- HERO / SECTION 1 : biceps curl -->
+<header id="home" class="sec hero">
+  <div class="inner">
+    <h1 class="in">FORGE <span>FITNESS</span></h1>
+    <p class="tag in" style="text-transform:none">Forge Fitness Unisex Gym — Train Hard. Get Strong. Stay Fit.</p>
+    <div class="btns in"><a class="btn solid" href="#contact">Join Now</a><a class="btn line" href="#pricing">View Plans</a></div>
+  </div>
+  <div id="floor" aria-hidden="true"></div>
+</header>
+
+<!-- SECTION 2 : shoulder press -->
+<section id="programs" class="sec">
+  <div class="inner">
+    <h2 class="rv">Programs built to move you</h2>
+    <div class="grid g2">
+      <div class="card rv"><h3>Strength</h3><p>Barbells, racks and progressive overload plans that add real weight to your lifts.</p></div>
+      <div class="card rv"><h3>Cardio</h3><p>Treadmill intervals, rowers and bike classes to build engine and endurance.</p></div>
+      <div class="card rv"><h3>Weight Loss</h3><p>Mixed training with nutrition guidance, tracked every week.</p></div>
+      <div class="card rv"><h3>Personal Training</h3><p>One-on-one coaching with a plan written around your goals and schedule.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3 : goblet squat -->
+<section id="why" class="sec">
+  <i id="trainers"></i>
+  <div class="inner">
+    <h2 class="rv">Why choose Forge Fitness</h2>
+    <div class="why">
+      <div class="card rv"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 8v8M7 5v14M17 5v14M21 8v8M7 12h10"/></svg></span><div><h3>Modern equipment</h3><p>Fresh machines, calibrated plates and a full free-weight floor.</p></div></div>
+      <div class="card rv"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.5 3.6-7 8-7s8 2.5 8 7"/></svg></span><div><h3>Expert trainers</h3><p>Certified coaches who correct your form and keep you progressing.</p></div></div>
+      <div class="card rv"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><h3>24/7 access</h3><p>Train at 5 a.m. or midnight. Your key card works every hour.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4 : deadlift -->
+<section id="pricing" class="sec">
+  <div class="inner">
+    <h2 class="rv">Pick your plan</h2>
+    <div class="grid g3">
+      <div class="card price rv"><h3>Basic</h3><div class="amt">$29<small>/mo</small></div><ul><li>Gym floor access</li><li>Locker room</li><li>Open 6 a.m.–10 p.m.</li></ul><a class="btn line sm" href="#contact">Choose Basic</a></div>
+      <div class="card price hot rv"><span class="badge">Most popular</span><h3>Pro</h3><div class="amt">$49<small>/mo</small></div><ul><li>24/7 access</li><li>All group classes</li><li>Monthly body scan</li></ul><a class="btn sm" href="#contact">Choose Pro</a></div>
+      <div class="card price rv"><h3>Elite</h3><div class="amt">$89<small>/mo</small></div><ul><li>Everything in Pro</li><li>4 PT sessions / month</li><li>Nutrition plan</li></ul><a class="btn line sm" href="#contact">Choose Elite</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="contact" class="free">
+  <div class="inner">
+    <h2 class="rv">Your first day is free</h2>
+    <form id="form" class="rv">
+      <input required name="name" placeholder="Full name" autocomplete="name" aria-label="Full name">
+      <input required type="email" name="email" placeholder="Email address" autocomplete="email" aria-label="Email">
+      <select aria-label="Main goal"><option>Build strength</option><option>Lose weight</option><option>Improve cardio</option><option>Train with a coach</option></select>
+      <button class="btn solid" type="submit">Claim my free day</button>
+      <p id="ok" role="status">You're in! We'll email your free-day pass shortly.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div><h3>Forge Fitness</h3><p>Forge Fitness Unisex Gym<br>Train Hard. Get Strong. Stay Fit.</p></div>
+  <div><h3>Visit</h3><p>R K Puram 2 Pala Road, Near Three Guides School,<br>Gautam Budh Park, Sasni Gate,<br>Aligarh, Uttar Pradesh – 202001<br><a href="tel:7817023096" style="color:var(--accent);text-decoration:none">📞 7817023096</a></p></div>
+  <div><h3>Hours</h3><p>Mon–Sat: 5:30 AM – 10:00 AM<br>Mon–Sat: 4:30 PM – 10:00 PM<br>Sunday: Closed</p></div>
+  <div><h3>Follow</h3><div class="soc">
+    <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a>
+    <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/></svg></a>
+    <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z"/></svg></a>
+  </div></div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(()=>{
+const $=s=>document.querySelector(s);
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+gsap.registerPlugin(ScrollTrigger);
+
+/* ---- mobile menu ---- */
+const nav=$('#nav'),burger=$('#burger');
+burger.onclick=()=>burger.setAttribute('aria-expanded',nav.classList.toggle('open'));
+document.querySelectorAll('#links a').forEach(a=>a.onclick=()=>{nav.classList.remove('open');burger.setAttribute('aria-expanded',false)});
+
+/* ---- free-day form ---- */
+$('#form').onsubmit=e=>{e.preventDefault();$('#ok').style.display='block';e.target.reset()};
+
+/* ---- falling dumbbells (inline SVG, generated) ---- */
+const bell=(c)=>`<svg viewBox="0 0 120 64" aria-hidden="true"><g stroke="#1B1B1B" stroke-width="4" stroke-linejoin="round">
+<rect x="4" y="6" width="18" height="52" rx="5" fill="${c}"/><rect x="98" y="6" width="18" height="52" rx="5" fill="${c}"/>
+<rect x="22" y="16" width="12" height="32" rx="3" fill="#1B1B1B"/><rect x="86" y="16" width="12" height="32" rx="3" fill="#1B1B1B"/>
+<rect x="34" y="28" width="52" height="8" fill="${c==='#E8452C'?'#1B1B1B':'#E8452C'}"/></g></svg>`;
+const floor=$('#floor'),sizes=[110,70,92,130,64,100,80];
+sizes.forEach((s,i)=>{
+  const d=document.createElement('div');d.className='d';
+  d.style.width=`clamp(${s*.45}px,${s/11}vw,${s}px)`;
+  d.innerHTML=bell(i%2?'#1B1B1B':'#E8452C')+'<span class="sh"></span>';
+  floor.appendChild(d);
+});
+const ds=[...floor.children];
+if(!RM){
+  ds.forEach(d=>gsap.set(d.querySelector('svg'),{rotation:gsap.utils.random(-9,9)}));
+  const sv=ds.map(d=>d.querySelector('svg'));
+  gsap.from(sv,{y:()=>-(innerHeight+320),duration:1.7,ease:'bounce.out',stagger:.16,delay:.2});
+  gsap.from(sv,{rotation:()=>gsap.utils.random(-150,150),duration:1.5,ease:'power2.out',stagger:.16,delay:.2});
+  gsap.from('.d .sh',{opacity:0,scaleX:.2,duration:.4,stagger:.16,delay:1.0});
+  gsap.from('.in',{y:50,opacity:0,duration:.9,stagger:.14,ease:'power3.out',delay:.1});
+  /* fade-and-slide-up reveals */
+  gsap.utils.toArray('.rv').forEach(el=>gsap.from(el,{y:50,opacity:0,duration:.8,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 92%'}}));
+}
+
+/* ---- scroll progress bar ---- */
+gsap.to('#bar i',{scaleY:1,ease:'none',scrollTrigger:{start:0,end:'max',scrub:.3}});
+
+/* ---- ATHLETE RIG ----
+ pose = [thigh, shin(rel), torso lean, upper-arm(rel torso), forearm(rel)]  in degrees (clockwise +)
+ A = start of a rep, B = peak of a rep. Hip height/offset is solved from leg angles so feet stay planted. */
+const EX=[
+ {n:'Biceps Curl',s:'3x12',r:12,A:[0,0,0,4,0],B:[0,0,0,4,-138]},
+ {n:'Shoulder Press',s:'3x10',r:10,A:[0,0,0,-30,-150],B:[0,0,0,-175,-5]},
+ {n:'Goblet Squat',s:'4x12',r:12,A:[0,0,0,-25,-125],B:[-85,105,25,-25,-125]},
+ {n:'Deadlift',s:'4x8',r:8,A:[0,0,0,0,0],B:[-50,60,70,-70,0]}];
+const CYC=4; /* visual rep cycles per section; the counter still climbs to the full set */
+const el={root:$('#root'),thigh:$('#thigh'),shin:$('#shin'),torso:$('#torso'),uarm:$('#uarm'),farm:$('#farm')};
+const rot=(g,a,x,y)=>g.setAttribute('transform',`rotate(${a} ${x} ${y})`);
+function render(P){
+  const R=Math.PI/180,t=P[0]*R,ts=(P[0]+P[1])*R;
+  const hx=190+95*Math.sin(t)+90*Math.sin(ts),hy=440-(95*Math.cos(t)+90*Math.cos(ts));
+  el.root.setAttribute('transform',`translate(${hx-190} ${hy-255})`);
+  rot(el.thigh,P[0],190,255);rot(el.shin,P[1],190,350);rot(el.torso,P[2],190,255);
+  rot(el.uarm,P[3],190,140);rot(el.farm,P[4],190,205);
+}
+let act=0,disp=EX[0].A.slice();
+const prog=EX.map(()=>({v:0})),lab=$('#lab'),cnt=$('#cnt');
+['#home','#programs','#why','#pricing'].forEach((id,i)=>{
+  gsap.to(prog[i],{v:1,ease:'none',scrollTrigger:{trigger:id,start:i?'top 60%':'top top',end:'bottom 40%',scrub:.5,
+    onToggle:s=>{if(s.isActive)act=i;else if(act===i)act=Math.max(0,i-1)}}});
+});
+/* hide the athlete once the signup section arrives */
+ScrollTrigger.create({trigger:'#contact',start:'top 75%',onEnter:()=>$('#stage').classList.add('off'),onLeaveBack:()=>$('#stage').classList.remove('off')});
+let last=-1;
+gsap.ticker.add(()=>{
+  const e=EX[act],p=prog[act].v,w=(1-Math.cos(Math.PI*2*Math.min(p,.9999)*CYC))/2,k=RM?1:.14;
+  disp=disp.map((d,i)=>d+(e.A[i]+(e.B[i]-e.A[i])*w-d)*k);
+  render(disp);
+  const reps=Math.ceil(p*e.r),key=act*100+reps;
+  if(key!==last){last=key;lab.textContent=`${e.n} – ${e.s}`;cnt.innerHTML=`${String(reps).padStart(2,'0')}<small> / ${e.r} reps</small>`}
+});
+})();
+</script>
+</body>
+</html>
