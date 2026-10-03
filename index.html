@@ -118,12 +118,111 @@ footer h3{color:var(--accent);font-size:1.6rem;margin-bottom:10px}footer p{margi
 #bar i{display:block;height:100%;background:var(--accent);transform:scaleY(0);transform-origin:top}
 
 /* ===== 7. RESPONSIVE ===== */
-@media(max-width:899px){
-  nav ul{position:absolute;top:var(--nav);left:0;right:0;flex-direction:column;gap:0;background:var(--bg1);border-bottom:3px solid var(--ink);transform:translateY(-130%);transition:transform .3s;z-index:-1}
-  nav.open ul{transform:none}
-  nav ul a{display:block;padding:16px 22px;font-size:1.1rem}
-  #burger{display:block}
+
+/* --- iOS / Android safe-area padding --- */
+@supports(padding:env(safe-area-inset-bottom)){
+  body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+  nav{padding-left:max(clamp(14px,4vw,48px),env(safe-area-inset-left));padding-right:max(clamp(14px,4vw,48px),env(safe-area-inset-right))}
+  footer{padding-bottom:max(48px,env(safe-area-inset-bottom))}
 }
+
+/* --- Touch-friendly defaults for all mobile --- */
+@media(pointer:coarse){
+  .btn{min-height:48px;min-width:48px;display:inline-flex;align-items:center;justify-content:center}
+  .soc a{min-width:48px;min-height:48px}
+  nav ul a{min-height:48px;display:flex;align-items:center}
+  form input,form select{min-height:48px;font-size:16px}  /* 16px prevents iOS auto-zoom */
+}
+
+/* --- Small phones: iPhone SE, Galaxy S (≤ 374px) --- */
+@media(max-width:374px){
+  :root{--nav:56px}
+  .logo{font-size:1.3rem}
+  .logo svg{width:28px;height:20px}
+  h1{font-size:clamp(2.4rem,14vw,3.5rem)}
+  h2{font-size:clamp(1.8rem,8vw,2.8rem)}
+  .tag{font-size:.95rem}
+  .btn{padding:12px 18px;font-size:1rem}
+  .sm{padding:8px 14px;font-size:.9rem}
+  .card{padding:14px}
+  .card h3{font-size:1.5rem}
+  .card p{font-size:.85rem}
+  .price .amt{font-size:2.4rem}
+  .ic{width:42px;height:42px}
+  .ic svg{width:24px;height:24px}
+  .sec{padding:calc(28svh + 20px) 14px 40px}
+  #stage{height:28svh}
+  #hud{left:8px;top:4px}
+  #lab{font-size:.75rem;padding:4px 8px}
+  #cnt{font-size:1.5rem}
+  .free{padding:60px 14px}
+  footer{padding:32px 14px;gap:22px;grid-template-columns:1fr}
+  footer h3{font-size:1.3rem}
+  .g2{grid-template-columns:1fr}
+  .g3{grid-template-columns:1fr}
+  .price.hot{transform:none}
+  .price.hot:hover{transform:none}
+  .badge{top:-12px;right:8px;font-size:.85rem;padding:4px 10px}
+  .btns{flex-direction:column;gap:10px}
+  .btns .btn{width:100%;text-align:center}
+  #floor{padding:0 1vw}
+}
+
+/* --- Standard phones & tablets (hamburger menu) ≤ 899px --- */
+@media(max-width:899px){
+  nav ul{position:absolute;top:var(--nav);left:0;right:0;flex-direction:column;gap:0;
+    background:var(--bg1);border-bottom:3px solid var(--ink);transform:translateY(-130%);
+    transition:transform .3s;z-index:-1;
+    padding-bottom:env(safe-area-inset-bottom,0px)}
+  nav.open ul{transform:none}
+  nav ul a{display:flex;align-items:center;padding:16px 22px;font-size:1.1rem;
+    border-bottom:1px solid color-mix(in srgb,var(--ink) 12%,transparent)}
+  nav ul li:last-child a{border-bottom:none}
+  #burger{display:block}
+
+  /* stack pricing cards */
+  .g3{grid-template-columns:1fr}
+  .price.hot{transform:none;margin:8px 0}
+  .price.hot:hover{transform:translate(-3px,-3px)}
+
+  /* full-width footer */
+  footer{grid-template-columns:1fr 1fr;gap:24px}
+
+  /* hero breathing room */
+  .hero{padding-bottom:80px}
+
+  /* athlete stage smaller on mobile */
+  #stage{height:30svh}
+  .sec{padding-top:calc(30svh + 24px)}
+}
+
+/* --- Standard phones (375–428px) iPhone 12-15, Pixel, Galaxy S --- */
+@media(min-width:375px) and (max-width:428px){
+  h1{font-size:clamp(2.8rem,13vw,4.2rem)}
+  .sec{padding-left:16px;padding-right:16px}
+  .free{padding:70px 16px}
+  .g2{grid-template-columns:1fr}
+}
+
+/* --- Larger phones / phablets (429–599px) iPhone Pro Max, Galaxy Ultra --- */
+@media(min-width:429px) and (max-width:599px){
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:1fr}
+  footer{grid-template-columns:1fr 1fr}
+}
+
+/* --- Small tablets (600–899px) iPad Mini, Galaxy Tab --- */
+@media(min-width:600px) and (max-width:899px){
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .price.hot{transform:scale(1.03)}
+  .price.hot:hover{transform:scale(1.03) translate(-2px,-2px)}
+  footer{grid-template-columns:repeat(2,1fr)}
+  .free{padding:90px 28px}
+  .sec{padding-left:28px;padding-right:28px}
+}
+
+/* --- Desktop (≥ 900px) --- */
 @media(min-width:900px){
   #stage{left:auto;right:3vw;top:calc(var(--nav) + 3vh);width:min(40vw,460px);height:calc(100svh - var(--nav) - 6vh);background:none}
   #hud{left:auto;right:0;top:0;align-items:flex-end}
@@ -134,7 +233,31 @@ footer h3{color:var(--accent);font-size:1.6rem;margin-bottom:10px}footer p{margi
   .hero .inner{position:static;padding:0}
   .free{padding:120px 20px}
 }
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* --- Large tablets landscape / iPad Pro (≥ 1024px) --- */
+@media(min-width:1024px){
+  footer{grid-template-columns:repeat(4,1fr)}
+}
+
+/* --- Landscape phones (short height) --- */
+@media(max-height:500px) and (orientation:landscape){
+  #stage{height:40svh}
+  .sec{padding-top:calc(40svh + 16px)}
+  .hero{min-height:calc(100svh - var(--nav))}
+  h1{font-size:clamp(2rem,8vw,4rem)}
+  .free{padding:40px 20px}
+  :root{--nav:52px}
+}
+
+/* --- Reduced motion --- */
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* --- Dark mode (respects system preference on iOS/Android) --- */
+@media(prefers-color-scheme:dark){
+  /* Optional: uncomment to enable auto dark mode
+  :root{--bg1:#1a1a1a;--bg2:#252525;--ink:#F3E3A3;--card:#2a2a2a;--cream:#1e1e1e}
+  */
+}
 </style>
 </head>
 <body>
